@@ -464,70 +464,132 @@
       max-width: 140px;
     }
 
-    /* TILES */
+    /* ===== TILES — 漢字2段デザイン ===== */
     .tile {
-      width: 32px;
-      height: 44px;
-      background: var(--tile-bg);
-      border: 1px solid var(--tile-border);
-      border-radius: 4px;
+      width: 36px;
+      height: 50px;
+      background: linear-gradient(170deg, #fffef8 0%, #f5edcc 100%);
+      border: 1px solid #bba84a;
+      border-bottom: 3px solid #8a7830;
+      border-right: 2px solid #a0903c;
+      border-radius: 5px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
       cursor: default;
       user-select: none;
       position: relative;
-      box-shadow: 2px 3px 0px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.8);
+      box-shadow: 2px 3px 6px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.95);
       transition: transform 0.15s, box-shadow 0.15s;
       flex-shrink: 0;
+      gap: 1px;
     }
+    .tile .t-num {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .tile .t-suit {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.5rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+    .tile .t-kanji {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+    /* 萬子＝赤 */
+    .tile.man .t-num  { color: #b81010; }
+    .tile.man .t-suit { color: #b81010; }
+    /* 筒子＝青 */
+    .tile.pin .t-num  { color: #0a38aa; }
+    .tile.pin .t-suit { color: #0a38aa; }
+    /* 索子＝緑 */
+    .tile.sou .t-num  { color: #0a700a; }
+    .tile.sou .t-suit { color: #0a700a; }
+    /* 字牌＝濃紺 */
+    .tile.honor .t-kanji { color: #1a1060; font-size: 1.2rem; }
+    /* 中だけ赤 */
+    .tile.honor.chun .t-kanji { color: #cc0000; }
+
+    /* smallサイズ（AI手牌など） */
     .tile.small {
-      width: 22px;
-      height: 30px;
-      font-size: 0.9rem;
+      width: 24px; height: 34px;
       border-radius: 3px;
-      box-shadow: 1px 2px 0px rgba(0,0,0,0.4);
+      border-bottom-width: 2px;
+      box-shadow: 1px 2px 4px rgba(0,0,0,0.4);
+      gap: 0;
     }
+    .tile.small .t-num  { font-size: 0.82rem; }
+    .tile.small .t-suit { font-size: 0.34rem; }
+    .tile.small .t-kanji{ font-size: 0.82rem; }
+
+    /* miniサイズ（捨て牌など） */
     .tile.mini {
-      width: 16px;
-      height: 22px;
-      font-size: 0.65rem;
+      width: 18px; height: 25px;
       border-radius: 2px;
-      box-shadow: 1px 1px 0px rgba(0,0,0,0.4);
+      border-bottom-width: 2px;
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+      gap: 0;
     }
+    .tile.mini .t-num  { font-size: 0.6rem; }
+    .tile.mini .t-suit { font-size: 0.26rem; }
+    .tile.mini .t-kanji{ font-size: 0.6rem; }
+
+    /* discard-tile（自分の捨て牌） */
+    .tile.discard-tile {
+      width: 22px; height: 30px;
+      border-radius: 3px;
+      border-bottom-width: 2px;
+      gap: 0;
+    }
+    .tile.discard-tile .t-num  { font-size: 0.7rem; }
+    .tile.discard-tile .t-suit { font-size: 0.3rem; }
+    .tile.discard-tile .t-kanji{ font-size: 0.7rem; }
+
+    /* 裏面 */
     .tile.back {
-      background: linear-gradient(135deg, #1a5c8a 0%, #0d2e4a 100%);
+      background: linear-gradient(135deg, #1e6090 0%, #0d2e50 100%);
       border-color: #1a3a5c;
+      border-bottom-color: #0a1e38;
     }
     .tile.back::after {
-      content: '🀫';
-      font-size: inherit;
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 3px;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.03) 0px,
+        rgba(255,255,255,0.03) 2px,
+        transparent 2px,
+        transparent 6px
+      );
     }
-    .tile.playable {
-      cursor: pointer;
-    }
+
+    .tile.playable { cursor: pointer; }
     .tile.playable:hover {
-      transform: translateY(-8px);
-      box-shadow: 2px 10px 0px rgba(0,0,0,0.4), 0 0 15px rgba(201,168,76,0.5);
+      transform: translateY(-10px);
+      box-shadow: 2px 12px 8px rgba(0,0,0,0.45), 0 0 16px rgba(201,168,76,0.6);
       z-index: 10;
     }
     .tile.selected {
-      transform: translateY(-12px);
-      box-shadow: 2px 14px 0px rgba(0,0,0,0.4), 0 0 20px rgba(201,168,76,0.8);
+      transform: translateY(-14px);
+      box-shadow: 2px 16px 10px rgba(0,0,0,0.5), 0 0 22px rgba(201,168,76,0.9);
       border-color: var(--gold);
+      border-width: 2px;
     }
-    .tile.discard-tile {
-      width: 20px;
-      height: 28px;
-      font-size: 0.8rem;
-      border-radius: 3px;
-      cursor: default;
-    }
-    .tile.red-five { color: #cc2200; }
+    .tile.drawn { margin-left: 10px; border-color: var(--gold-light); }
     .tile.dora-indicator {
       border-color: var(--gold);
-      box-shadow: 0 0 8px var(--shadow-gold), 2px 2px 0 rgba(0,0,0,0.4);
+      box-shadow: 0 0 10px var(--shadow-gold), 2px 2px 4px rgba(0,0,0,0.4);
     }
 
     /* Player bottom area */
@@ -1109,52 +1171,30 @@
     <!-- Hands -->
     <div class="lesson-content" id="lesson-hands">
       <div class="lesson-card">
-        <div class="lesson-card-title">🀄 順子（シュンツ）</div>
+        <div class="lesson-card-title">📐 順子（シュンツ）— 連番3枚</div>
         <div class="lesson-card-body">
           同じ種類の連続した3枚。数字牌だけに作れる。
-          <div class="tile-example">
-            <div class="tile">🀇</div><div class="tile">🀈</div><div class="tile">🀉</div>
-            <span style="color:rgba(245,240,232,0.4);margin:0 8px">または</span>
-            <div class="tile">🀙</div><div class="tile">🀚</div><div class="tile">🀛</div>
-          </div>
+          <div class="tile-example" id="ex-shuntsu"></div>
         </div>
       </div>
       <div class="lesson-card">
-        <div class="lesson-card-title">🀄 刻子（コーツ）</div>
+        <div class="lesson-card-title">🎯 刻子（コーツ）— 同じ牌3枚</div>
         <div class="lesson-card-body">
           同じ牌が3枚。どんな牌でも作れる。4枚揃えると「槓子（カントツ）」。
-          <div class="tile-example">
-            <div class="tile">🀙</div><div class="tile">🀙</div><div class="tile">🀙</div>
-            <span style="color:rgba(245,240,232,0.4);margin:0 8px">または</span>
-            <div class="tile">🀄</div><div class="tile">🀄</div><div class="tile">🀄</div>
-          </div>
+          <div class="tile-example" id="ex-koutsu"></div>
         </div>
       </div>
       <div class="lesson-card">
-        <div class="lesson-card-title">🀄 雀頭（ジャントウ）</div>
+        <div class="lesson-card-title">👥 雀頭（ジャントウ）— 同じ牌2枚</div>
         <div class="lesson-card-body">
-          同じ牌2枚。「対子（トイツ）」ともいう。手牌の中に必ず1つ必要。
-          <div class="tile-example">
-            <div class="tile">🀚</div><div class="tile">🀚</div>
-          </div>
+          手牌の中に必ず1つ必要なペア。
+          <div class="tile-example" id="ex-jantou"></div>
         </div>
       </div>
       <div class="lesson-card">
-        <div class="lesson-card-title">✅ 和了形の例</div>
+        <div class="lesson-card-title">✅ 和了形の例（4面子＋1雀頭＝14枚）</div>
         <div class="lesson-card-body">
-          4面子 + 1雀頭 = 14枚でアガり！
-          <div class="tile-example">
-            <div class="tile">🀇</div><div class="tile">🀈</div><div class="tile">🀉</div>
-            <span style="color:rgba(201,168,76,0.5);font-size:0.7rem;margin:0 3px">順</span>
-            <div class="tile">🀙</div><div class="tile">🀙</div><div class="tile">🀙</div>
-            <span style="color:rgba(201,168,76,0.5);font-size:0.7rem;margin:0 3px">刻</span>
-            <div class="tile">🀅</div><div class="tile">🀆</div><div class="tile">🀇</div>
-            <span style="color:rgba(201,168,76,0.5);font-size:0.7rem;margin:0 3px">順</span>
-            <div class="tile">🀀</div><div class="tile">🀁</div><div class="tile">🀂</div>
-            <span style="color:rgba(201,168,76,0.5);font-size:0.7rem;margin:0 3px">順</span>
-            <div class="tile">🀄</div><div class="tile">🀄</div>
-            <span style="color:rgba(201,168,76,0.5);font-size:0.7rem;margin:0 3px">頭</span>
-          </div>
+          <div class="tile-example" id="ex-agari"></div>
         </div>
       </div>
     </div>
@@ -1291,17 +1331,60 @@ const TILES = {
   honor: ['🀀','🀁','🀂','🀃','🀄','🀅','🀆']
 };
 
-// Correct tiles mapping
-const TILE_CHARS = {
-  // Man (1-9)
-  m1:'🀇', m2:'🀈', m3:'🀉', m4:'🀊', m5:'🀋', m6:'🀌', m7:'🀍', m8:'🀎', m9:'🀏',
-  // Pin (1-9)
-  p1:'🀙', p2:'🀚', p3:'🀛', p4:'🀜', p5:'🀝', p6:'🀞', p7:'🀟', p8:'🀠', p9:'🀡',
-  // Sou (1-9)
-  s1:'🀐', s2:'🀑', s3:'🀒', s4:'🀓', s5:'🀔', s6:'🀕', s7:'🀖', s8:'🀗', s9:'🀘',
-  // Honors
-  ew:'🀀', sw:'🀁', ww:'🀂', nw:'🀃', haku:'🀄', hatsu:'🀅', chun:'🀆'
+// 牌の表示ラベル定義（漢字）
+const TILE_LABEL = {
+  // 萬子
+  m1:{num:'１',suit:'萬'}, m2:{num:'２',suit:'萬'}, m3:{num:'３',suit:'萬'},
+  m4:{num:'４',suit:'萬'}, m5:{num:'５',suit:'萬'}, m6:{num:'６',suit:'萬'},
+  m7:{num:'７',suit:'萬'}, m8:{num:'８',suit:'萬'}, m9:{num:'９',suit:'萬'},
+  // 筒子
+  p1:{num:'１',suit:'筒'}, p2:{num:'２',suit:'筒'}, p3:{num:'３',suit:'筒'},
+  p4:{num:'４',suit:'筒'}, p5:{num:'５',suit:'筒'}, p6:{num:'６',suit:'筒'},
+  p7:{num:'７',suit:'筒'}, p8:{num:'８',suit:'筒'}, p9:{num:'９',suit:'筒'},
+  // 索子
+  s1:{num:'１',suit:'索'}, s2:{num:'２',suit:'索'}, s3:{num:'３',suit:'索'},
+  s4:{num:'４',suit:'索'}, s5:{num:'５',suit:'索'}, s6:{num:'６',suit:'索'},
+  s7:{num:'７',suit:'索'}, s8:{num:'８',suit:'索'}, s9:{num:'９',suit:'索'},
+  // 字牌
+  ew:{kanji:'東'}, sw:{kanji:'南'}, ww:{kanji:'西'}, nw:{kanji:'北'},
+  haku:{kanji:'白'}, hatsu:{kanji:'發'}, chun:{kanji:'中', red:true}
 };
+
+// 牌DOM要素を生成する関数
+function makeTileEl(tile, extraClass='') {
+  const div = document.createElement('div');
+  const lbl = TILE_LABEL[tile.id];
+  if (!lbl) { div.className = 'tile ' + extraClass; return div; }
+
+  // suitクラス付与
+  const suitClass = tile.suit === 'z'
+    ? 'honor' + (tile.id === 'chun' ? ' chun' : '')
+    : tile.suit === 'm' ? 'man'
+    : tile.suit === 'p' ? 'pin'
+    : 'sou';
+
+  div.className = ['tile', suitClass, extraClass].filter(Boolean).join(' ');
+
+  if (lbl.kanji) {
+    const k = document.createElement('span');
+    k.className = 't-kanji';
+    k.textContent = lbl.kanji;
+    div.appendChild(k);
+  } else {
+    const n = document.createElement('span');
+    n.className = 't-num';
+    n.textContent = lbl.num;
+    div.appendChild(n);
+    const s = document.createElement('span');
+    s.className = 't-suit';
+    s.textContent = lbl.suit;
+    div.appendChild(s);
+  }
+  return div;
+}
+
+// 後方互換用（char は使わないが id だけ保持）
+const TILE_CHARS = {}; // 不使用・互換のため残す
 
 // Build full deck (136 tiles)
 function buildDeck() {
@@ -1310,14 +1393,14 @@ function buildDeck() {
   for (const suit of suits) {
     for (let n = 1; n <= 9; n++) {
       for (let c = 0; c < 4; c++) {
-        deck.push({suit, num: n, id: `${suit}${n}`, char: TILE_CHARS[`${suit}${n}`]});
+        deck.push({suit, num: n, id: `${suit}${n}`});
       }
     }
   }
   const honors = ['ew','sw','ww','nw','haku','hatsu','chun'];
   for (const h of honors) {
     for (let c = 0; c < 4; c++) {
-      deck.push({suit:'z', num:honors.indexOf(h)+1, id:h, char:TILE_CHARS[h]});
+      deck.push({suit:'z', num:honors.indexOf(h)+1, id:h});
     }
   }
   return deck;
@@ -1414,9 +1497,12 @@ function renderMyHand() {
   el.innerHTML = '';
   const hand = G.hands[0];
   hand.forEach((t, i) => {
-    const div = document.createElement('div');
-    div.className = 'tile playable' + (i === selectedTileIdx ? ' selected' : '') + (i === hand.length-1 && G.drawnTile && G.currentPlayer === 0 ? ' drawn' : '');
-    div.textContent = t.char;
+    const isDrawn = i === hand.length-1 && G.drawnTile && G.currentPlayer === 0;
+    const isSelected = i === selectedTileIdx;
+    let extra = 'playable';
+    if (isSelected) extra += ' selected';
+    if (isDrawn) extra += ' drawn';
+    const div = makeTileEl(t, extra);
     div.onclick = () => selectTile(i);
     el.appendChild(div);
   });
@@ -1437,21 +1523,17 @@ function renderDiscards() {
   const el = document.getElementById('my-discards');
   el.innerHTML = '';
   G.discards[0].forEach(t => {
-    const div = document.createElement('div');
-    div.className = 'tile discard-tile';
-    div.textContent = t.char;
+    const div = makeTileEl(t, 'discard-tile');
     el.appendChild(div);
   });
 
-  // Center discards (all AI discards merged for space)
   const center = document.getElementById('discard-center');
   center.innerHTML = '';
   [1,2,3].forEach(p => {
-    G.discards[p].slice(-6).forEach(t => {
-      const div = document.createElement('div');
-      div.className = 'tile mini';
-      div.style.color = p===1?'#aaddff':p===2?'#ffddaa':'#ddffaa';
-      div.textContent = t.char;
+    G.discards[p].slice(-8).forEach(t => {
+      const div = makeTileEl(t, 'mini');
+      // AIごとに枠色を変えて誰の捨て牌かわかるように
+      div.style.borderColor = p===1?'#6699cc': p===2?'#cc9944':'#66aa66';
       center.appendChild(div);
     });
   });
@@ -1459,15 +1541,17 @@ function renderDiscards() {
 
 function renderDora() {
   if (!G.doraIndicator) return;
-  document.getElementById('info-dora').textContent = G.dora ? G.dora.char : '?';
+  // info-dora は tile で表示
+  const infoEl = document.getElementById('info-dora');
+  if (infoEl) {
+    infoEl.innerHTML = '';
+    const d = makeTileEl(G.doraIndicator, 'mini');
+    infoEl.appendChild(d);
+  }
   const el = document.getElementById('dora-area');
   el.innerHTML = '';
-  if (G.doraIndicator) {
-    const d = document.createElement('div');
-    d.className = 'tile mini dora-indicator';
-    d.textContent = G.doraIndicator.char;
-    el.appendChild(d);
-  }
+  const d = makeTileEl(G.doraIndicator, 'mini dora-indicator');
+  el.appendChild(d);
 }
 
 // Draw initial dora indicator (3rd from end)
@@ -1556,7 +1640,7 @@ function drawForPlayer() {
   renderGame();
   document.getElementById('center-info').textContent = 'あなたの番です。牌を選んで捨ててください';
   updatePlayerActions();
-  showToast('ツモ！' + tile.char);
+  showToast('ツモ！ ' + tileLabel(tile));
 }
 
 function updatePlayerActions() {
@@ -1735,10 +1819,16 @@ function tileUsefulScore(tile, hand) {
   return score;
 }
 
+function tileLabel(tile) {
+  const lbl = TILE_LABEL[tile.id];
+  if (!lbl) return '?';
+  return lbl.kanji || (lbl.num + lbl.suit);
+}
+
 function showAIDiscard(player, tile) {
   const names = ['', '下家AI', '対面AI', '上家AI'];
-  showToast(`${names[player]}が ${tile.char} を捨てた`);
-  document.getElementById('center-info').textContent = `${names[player]}: ${tile.char}`;
+  showToast(`${names[player]}が ${tileLabel(tile)} を捨てた`);
+  document.getElementById('center-info').textContent = `${names[player]}: ${tileLabel(tile)}`;
 }
 
 function checkPlayerReactions(tile) {
@@ -1934,41 +2024,68 @@ function showLesson(tab, btn) {
 // TILE EXAMPLES FOR LESSONS
 // ===========================
 function initLessonTiles() {
-  const manEl = document.getElementById('ex-man');
-  const pinEl = document.getElementById('ex-pin');
-  const souEl = document.getElementById('ex-sou');
-  const honorEl = document.getElementById('ex-honor');
+  // 牌の種類タブ
+  const manEl  = document.getElementById('ex-man');
+  const pinEl  = document.getElementById('ex-pin');
+  const souEl  = document.getElementById('ex-sou');
+  const honorEl= document.getElementById('ex-honor');
 
   if (manEl) {
     for (let n = 1; n <= 9; n++) {
-      const div = document.createElement('div');
-      div.className = 'tile small';
-      div.textContent = TILE_CHARS[`m${n}`];
-      manEl.appendChild(div);
+      manEl.appendChild(makeTileEl({suit:'m',num:n,id:`m${n}`}, 'small'));
     }
   }
   if (pinEl) {
     for (let n = 1; n <= 9; n++) {
-      const div = document.createElement('div');
-      div.className = 'tile small';
-      div.textContent = TILE_CHARS[`p${n}`];
-      pinEl.appendChild(div);
+      pinEl.appendChild(makeTileEl({suit:'p',num:n,id:`p${n}`}, 'small'));
     }
   }
   if (souEl) {
     for (let n = 1; n <= 9; n++) {
-      const div = document.createElement('div');
-      div.className = 'tile small';
-      div.textContent = TILE_CHARS[`s${n}`];
-      souEl.appendChild(div);
+      souEl.appendChild(makeTileEl({suit:'s',num:n,id:`s${n}`}, 'small'));
     }
   }
   if (honorEl) {
     ['ew','sw','ww','nw','haku','hatsu','chun'].forEach(h => {
-      const div = document.createElement('div');
-      div.className = 'tile small';
-      div.textContent = TILE_CHARS[h];
-      honorEl.appendChild(div);
+      honorEl.appendChild(makeTileEl({suit:'z',num:0,id:h}, 'small'));
+    });
+  }
+
+  // 手牌の組み方タブ
+  const shEl = document.getElementById('ex-shuntsu');
+  if (shEl) {
+    [{suit:'m',num:3,id:'m3'},{suit:'m',num:4,id:'m4'},{suit:'m',num:5,id:'m5'}].forEach(t => shEl.appendChild(makeTileEl(t,'small')));
+    const sep = document.createElement('span'); sep.textContent='または'; sep.style.cssText='color:rgba(245,240,232,0.4);margin:0 8px;font-size:0.75rem;align-self:center'; shEl.appendChild(sep);
+    [{suit:'p',num:7,id:'p7'},{suit:'p',num:8,id:'p8'},{suit:'p',num:9,id:'p9'}].forEach(t => shEl.appendChild(makeTileEl(t,'small')));
+  }
+  const koEl = document.getElementById('ex-koutsu');
+  if (koEl) {
+    [{suit:'p',num:5,id:'p5'},{suit:'p',num:5,id:'p5'},{suit:'p',num:5,id:'p5'}].forEach(t => koEl.appendChild(makeTileEl(t,'small')));
+    const sep = document.createElement('span'); sep.textContent='または'; sep.style.cssText='color:rgba(245,240,232,0.4);margin:0 8px;font-size:0.75rem;align-self:center'; koEl.appendChild(sep);
+    [{suit:'z',num:7,id:'chun'},{suit:'z',num:7,id:'chun'},{suit:'z',num:7,id:'chun'}].forEach(t => koEl.appendChild(makeTileEl(t,'small')));
+  }
+  const jaEl = document.getElementById('ex-jantou');
+  if (jaEl) {
+    [{suit:'s',num:6,id:'s6'},{suit:'s',num:6,id:'s6'}].forEach(t => jaEl.appendChild(makeTileEl(t,'small')));
+  }
+  const agEl = document.getElementById('ex-agari');
+  if (agEl) {
+    const hand = [
+      {suit:'m',num:1,id:'m1'},{suit:'m',num:2,id:'m2'},{suit:'m',num:3,id:'m3'},
+      {suit:'p',num:4,id:'p4'},{suit:'p',num:5,id:'p5'},{suit:'p',num:6,id:'p6'},
+      {suit:'s',num:7,id:'s7'},{suit:'s',num:8,id:'s8'},{suit:'s',num:9,id:'s9'},
+      {suit:'z',num:1,id:'ew'},{suit:'z',num:1,id:'ew'},{suit:'z',num:1,id:'ew'},
+      {suit:'m',num:9,id:'m9'},{suit:'m',num:9,id:'m9'},
+    ];
+    hand.forEach((t, i) => {
+      if (i===3||i===6||i===9||i===12) {
+        const sep = document.createElement('span');
+        sep.style.cssText='color:rgba(201,168,76,0.4);font-size:0.6rem;align-self:center;margin:0 2px';
+        sep.textContent = i===12 ? '頭' : '順';
+        if (i===9) sep.textContent='刻';
+        agEl.appendChild(sep);
+      }
+      agEl.appendChild(makeTileEl(t,'small'));
     });
   }
 }
